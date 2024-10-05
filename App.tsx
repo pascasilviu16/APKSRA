@@ -1,17 +1,21 @@
 import React from 'react';
 import { SafeAreaView, View, Button, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack'; // Adăugăm StackNavigationProp pentru a tipa navigation
+import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack';
 import LoginScreen from './LoginS';
 import RegisterScreen from './RegisterS';
 import HomeScreen from './HomeS'; // Ecranul principal
+import InchiriereScreen from './InchiriereScreen'; // Ecran pentru închiriere
+import CompostScreen from './CompostScreen'; // Ecran pentru compost
 
 // Definim tipurile pentru rutele navigării
-type RootStackParamList = {
+export type RootStackParamList = {
   Main: undefined;
   Login: undefined;
   Register: undefined;
-  Home: undefined;
+  Home: { username: string };
+  Inchiriere: undefined;
+  Compost: undefined;
 };
 
 // Definirea navigatorului Stack
@@ -24,7 +28,15 @@ function App(): React.JSX.Element {
         <Stack.Screen name="Main" component={MainScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Register" component={RegisterScreen} />
-        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={({ route }) => ({
+            title: `Bine ai venit, ${route.params?.username || 'Utilizator'}!`,
+          })}
+        />
+        <Stack.Screen name="Inchiriere" component={InchiriereScreen} />
+        <Stack.Screen name="Compost" component={CompostScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
