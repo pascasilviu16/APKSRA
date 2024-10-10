@@ -13,8 +13,8 @@ export type RootStackParamList = {
   Main: undefined;
   Login: undefined;
   Register: undefined;
-  Home: { username: string };
-  Inchiriere: undefined;
+  Home: { username: string; points: number };
+  Inchiriere: { username: string; points: number };
   Compost: undefined;
 };
 
@@ -25,17 +25,12 @@ function App(): React.JSX.Element {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Main">
-        <Stack.Screen name="Main" component={MainScreen} />
+        <Stack.Screen name="Main" component={MainScreen} options={{ title: 'titluuuuu' }} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Register" component={RegisterScreen} />
         <Stack.Screen
-          name="Home"
-          component={HomeScreen}
-          options={({ route }) => ({
-            title: `Bine ai venit, ${route.params?.username || 'Utilizator'}!`,
-          })}
-        />
-        <Stack.Screen name="Inchiriere" component={InchiriereScreen} />
+          name="Home" component={HomeScreen} options={({ route }) => ({ title: `Bine ai venit, ${route.params?.username || 'Utilizator'}!`, })} />
+        <Stack.Screen name="Inchiriere" component={InchiriereScreen} /> 
         <Stack.Screen name="Compost" component={CompostScreen} />
       </Stack.Navigator>
     </NavigationContainer>

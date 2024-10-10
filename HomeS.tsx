@@ -13,22 +13,17 @@ interface Props {
 }
 
 const HomeScreen: React.FC<Props> = ({ route, navigation }) => {
-  const { username } = route.params;
+  const { username, points } = route.params; // Accesăm username și points din parametrii rutei
 
   return (
     <View style={styles.container}>
-      <Text style={styles.welcomeText}>Alege ce vrei să faci!</Text>
+      <Text style={styles.welcomeText}>Bine ai venit, {username}!</Text> 
+      <Text style={styles.welcomeText}>salut, {username}! ai {points} puncte disponibile.</Text>
       <View style={styles.buttonContainer}>
-        <Button
-          title="INCHIRIAZA"
-          onPress={() => navigation.navigate('Inchiriere')}
-        />
+      <Button title="INCHIRIAZA" onPress={() => navigation.navigate('Inchiriere', { username, points })} />
       </View>
       <View style={styles.buttonContainer}>
-        <Button
-          title="COMPOST"
-          onPress={() => navigation.navigate('Compost')}
-        />
+      <Button title="COMPOST" onPress={() => navigation.navigate('Compost', { username, points })}/>
       </View>
     </View>
   );
@@ -45,8 +40,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   buttonContainer: {
-    marginVertical: 10, // Spațiu între butoane
-    width: 200, // Opțional, pentru a face butoanele mai mari
+    marginVertical: 10,
+    width: 200,
   },
 });
 

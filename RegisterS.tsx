@@ -2,15 +2,12 @@ import React, { useState } from 'react';
 import { View, TextInput, Button, StyleSheet } from 'react-native';
 import axios from 'axios';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from './App';
 
-type RootStackParamList = {
-  Home: undefined;
-};
-
-type NavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
+type RegisterScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Register'>;
 
 interface Props {
-  navigation: NavigationProp;
+  navigation: RegisterScreenNavigationProp;
 }
 
 const RegisterScreen: React.FC<Props> = ({ navigation }) => {
@@ -23,8 +20,11 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
         username,
         password,
       });
+
       if (response.data.success) {
-        navigation.navigate('Home'); // Navigare către ecranul principal
+        const { points } = response.data;
+        // Navigare către ecranul Home, cu username și points trimise ca parametri
+        navigation.navigate('Home', { username, points });
       } else {
         console.error('Înregistrare eșuată');
       }
@@ -32,7 +32,6 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
       console.error('Eroare la înregistrare:', error);
     }
   };
-  
 
   return (
     <View style={styles.container}>

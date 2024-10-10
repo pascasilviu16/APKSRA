@@ -14,23 +14,24 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-const handleLogin = async () => {
-  try {
-    const response = await axios.post('http://192.168.0.141:3000/login', {
-      username,
-      password,
-    });
+  const handleLogin = async () => {
+    try {
+      const response = await axios.post('http://192.168.0.141:3000/login', {
+        username,
+        password,
+      });
 
-    if (response.data.success) {
-      navigation.navigate('Home', { username }); // Trimitem username-ul către ecranul Home
-    } else {
-      console.error('Autentificare eșuată');
+      if (response.data.success) {
+        const points = response.data.points || 1000; // Setează punctele din răspuns sau 1000 dacă nu există
+        navigation.navigate('Home', { username, points }); // Trimitem username-ul și punctele către ecranul Home
+      } else {
+        console.error('Autentificare eșuată');
+      }
+      
+    } catch (error) {
+      console.error('Eroare la autentificare:', error);
     }
-  } catch (error) {
-    console.error('Eroare la autentificare:', error);
-  }
-};
-
+  };
 
   return (
     <View style={styles.container}>
