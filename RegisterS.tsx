@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet } from 'react-native';
+import { View, TextInput, Button, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import axios from 'axios';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from './App';
@@ -40,6 +40,7 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
         value={username}
         onChangeText={setUsername}
         style={styles.input}
+        placeholderTextColor="black" // Text placeholder negru
       />
       <TextInput
         placeholder="Parolă"
@@ -47,8 +48,11 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
         onChangeText={setPassword}
         secureTextEntry
         style={styles.input}
+        placeholderTextColor="black" // Text placeholder negru
       />
-      <Button title="Înregistrare" onPress={handleRegister} />
+      <TouchableOpacity style={styles.button} onPress={handleRegister}>
+        <Text style={styles.buttonText}>ÎNREGISTRARE</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -58,13 +62,28 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     padding: 20,
+    backgroundColor: '#bcffab', // Verde deschis
   },
   input: {
-    height: 40,
-    borderColor: 'gray',
+    height: 50,
+    borderColor: 'black', // Marginea neagră
     borderWidth: 1,
-    marginBottom: 10,
+    marginBottom: 15,
     paddingHorizontal: 10,
+    borderRadius: 8, // Colțuri rotunjite
+    backgroundColor: '#ffffff',
+    color: 'black', // Textul din câmpurile de input negru
+  },
+  button: {
+    backgroundColor: '#34a1eb', // Albastru pentru buton
+    paddingVertical: 15,
+    borderRadius: 10, // Colțuri rotunjite pentru buton
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: '#ffffff', // Text alb pe buton
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });
 

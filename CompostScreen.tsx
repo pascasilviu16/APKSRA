@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Button, StyleSheet, Alert } from 'react-native';
+import { View, Text, Button, StyleSheet, Alert, ImageBackground } from 'react-native';
 import axios from 'axios';  // Asigură-te că Axios este importat
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
@@ -78,21 +78,30 @@ const CompostScreen: React.FC<Props> = ({ route, navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.welcomeText}>Ai {points} puncte disponibile</Text>
-      {compostItems.map((item) => (
-        <View key={item.name} style={styles.buttonContainer}>
-          <Button
-            title={`${item.name} (${item.points} puncte)`}
-            onPress={() => handleCompostItem(item)}
-          />
-        </View>
-      ))}
-    </View>
+    <ImageBackground
+      source={require('./assets/background_compost.png')} // Asigură-te că imaginea este plasată corect
+      style={styles.background}
+    >
+      <View style={styles.container}>
+        <Text style={styles.welcomeText}>Ai {points} puncte disponibile</Text>
+        {compostItems.map((item) => (
+          <View key={item.name} style={styles.buttonContainer}>
+            <Button
+              title={`${item.name} (${item.points} puncte)`}
+              onPress={() => handleCompostItem(item)}
+            />
+          </View>
+        ))}
+      </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    justifyContent: 'center',
+  },
   container: {
     flex: 1,
     justifyContent: 'center',

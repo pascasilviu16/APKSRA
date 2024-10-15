@@ -1,12 +1,12 @@
 import React from 'react';
-import { SafeAreaView, View, Button, StyleSheet } from 'react-native';
+import { SafeAreaView, View, Button, StyleSheet, Image, TouchableOpacity, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack';
 import LoginScreen from './LoginS';
 import RegisterScreen from './RegisterS';
 import HomeScreen from './HomeS'; // Ecranul principal
 import InchiriereScreen from './InchiriereScreen'; // Ecran pentru închiriere
-import CompostScreen from './CompostScreen'; // Ecran pentru compost
+import CompostScreen from './CompostScreen';  // Ecran pentru compost
 
 // Definim tipurile pentru rutele navigării
 export type RootStackParamList = {
@@ -15,7 +15,7 @@ export type RootStackParamList = {
   Register: undefined;
   Home: { username: string; points: number };
   Inchiriere: { username: string; points: number };
-  Compost: undefined;
+  Compost: { username: string; points: number }; 
 };
 
 // Definirea navigatorului Stack
@@ -25,7 +25,7 @@ function App(): React.JSX.Element {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Main">
-        <Stack.Screen name="Main" component={MainScreen} options={{ title: 'titluuuuu' }} />
+        <Stack.Screen name="Main" component={MainScreen} options={{ title: 'Bine ați venit!' }} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Register" component={RegisterScreen} />
         <Stack.Screen
@@ -44,21 +44,25 @@ interface MainScreenProps {
   navigation: MainScreenNavigationProp;
 }
 
-// Ecranul principal cu butoanele de Conectare și Înregistrare
+// Ecranul principal cu logo și butoanele de Conectare și Înregistrare
 function MainScreen({ navigation }: MainScreenProps) {
   return (
     <SafeAreaView style={styles.container}>
+      {/* Adăugăm logo-ul */}
+      <Image
+        source={require('./assets/logo.png')} // Asigură-te că imaginea este plasată corect
+        style={styles.logo}
+        resizeMode="contain"
+      />
       <View style={styles.buttonContainer}>
-        <Button
-          title="Conectare"
-          onPress={() => navigation.navigate('Login')}
-        />
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Login')}>
+          <Text style={styles.buttonText}>CONECTARE</Text>
+        </TouchableOpacity>
       </View>
       <View style={styles.buttonContainer}>
-        <Button
-          title="Înregistrare"
-          onPress={() => navigation.navigate('Register')}
-        />
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Register')}>
+          <Text style={styles.buttonText}>ÎNREGISTRARE</Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
@@ -69,9 +73,27 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#bcffab', // Verde deschis
+  },
+  logo: {
+    width: 350, // Ajustăm lățimea pentru a fi dublă
+    height: 240, // Ajustăm înălțimea pentru a fi dublă
+    marginBottom: 10, // Spațiu sub logo
   },
   buttonContainer: {
-    margin: 10,
+    margin: 10, // Mărim distanța dintre butoane
+  },
+  button: {
+    backgroundColor: '#34a1eb',
+    paddingVertical: 14, // Mărim paddingul pentru a face butonul mai înalt
+    paddingHorizontal: 12, // Mărim lățimea butoanelor
+    borderRadius: 10, // Colțuri ușor rotunjite
+  },
+  buttonText: {
+    color: '#FFFFFF', // Text alb pe buton
+    fontSize: 22, // Mărim textul
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
 });
 
